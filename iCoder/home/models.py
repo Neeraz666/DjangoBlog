@@ -9,3 +9,5 @@ class Contact(models.Model):
     content = models.TextField(default='')
     timeStamp = models.DateTimeField(auto_now_add=True, blank=True)
 
+    def __str__(self):
+        return self.name+"'s"+" Issues"
