@@ -13,9 +13,9 @@
             <strong class="d-inline-block mb-2 text-primary">{{blog.author}}</strong>
             <h3 class="mb-0">{{blog.title}}</h3>
             <div class="mb-1 text-muted">{{blog.timeStamp}}</div>
-            <p class="card-text mb-auto">{{blog.content}}</p>
+            <p class="card-text mb-auto">{{blog.content| truncatechars:300 }}</p>
             <div class="my-2">
-                <a href="/blog/blogpost" role="button" class="btn btn-primary">Continue reading</a>
+                <a href="/blog/{{blog.slug}}" role="button" class="btn btn-primary">Continue reading</a>
             </div>
 
         </div>

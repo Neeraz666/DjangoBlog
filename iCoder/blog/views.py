@@ -10,4 +10,6 @@ def blogHome(request):
 
 
 def blogPost(request, slug):
-    return render(request, "blog/blogpost.html", {"slug": slug})
+    post = Post.objects.filter(slug=slug)[0]
+    context = {'post':post}
+    return render(request, "blog/blogpost.html", context)
