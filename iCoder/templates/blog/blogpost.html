@@ -3,10 +3,13 @@
 {% block title %} Blogpost{% endblock title %}
 
 {% block body %}
+{% load humanize %}
+
 <div class="container my-3 ">
     <div class="blog-post">
         <h2 class="blog-post-title">{{post.title}}</h2>
-        <p class="blog-post-meta">{{post.timeStamp}} by <a href="#">{{post.author}}</a></p>
+        <p class="blog-post-meta">{{post.timeStamp}} by <a href="/about">{{post.author}}</a>
+        (<span >{{post.views}} views</span>)</p>
 
         <p>{{post.content}}</p>
         <hr>
@@ -14,26 +17,31 @@
     <h2> Comments: ({{comments.count}})</h2>
     <div class="my-2">
         {% if user.is_authenticated %}
-            <form action="/blog/blogComment" method="post">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="exampleInputEmail1">Post Comment </label>
-                    <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
-                </div>
-                <input type="hidden" name="postSno" value="{{post.sno}}">
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
+        <form action="/blog/blogComment" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="exampleInputEmail1">Post Comment </label>
+                <input type="text" class="form-control" name="comment" placeholder="Enter comment here">
+            </div>
+            <input type="hidden" name="postSno" value="{{post.sno}}">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
         {% else %}
-            <h3><marquee><i>Please Login to post Comments</i></marquee></h3>
+        <div class="d-flex justify-content-center align-items-center m-5">
+            <h3><i>Please <button type="button" class="btn btn-success mx-2" data-toggle="modal"
+                        data-target="#loginModal">
+                        Login
+                    </button> to post Comments</i></h3>
+        </div>
         {% endif %}
-        <div class="row my-3">
+        <div class="row md-3">
             {% for comment in comments %}
             <div class="col-md-1">
                 <img class="rounded mx-auto d-block w-100 p-1" src="/static/images/user.png" alt="user">
             </div>
             <div class="col-md-11">
-                <b>{{comment.user.username}}</b> <i>{{comment.timestamp}}</i> <br>
-                {{comment.comment}}
+                <b>{{comment.user.username}}</b> <span class='badge badge-success'><i>{{comment.timestamp| naturaltime}}</i> </span> <br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{{comment.comment}}
             </div>
             {% endfor %}
         </div>
