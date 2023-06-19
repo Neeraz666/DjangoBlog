@@ -62,14 +62,13 @@ def handleSignup(request):
             return redirect('home')
         if (pass1!= pass2):
              messages.error(request, " Passwords do not match")
-             return redirect('home')
-        
+             return redirect('home')        
 
         myuser = User.objects.create_user(username, email, pass1)
         myuser.first_name= fname
         myuser.last_name= lname
-        myuser.save()
         messages.success(request, " Your iCoder has been successfully created")
+        myuser.save()
         return redirect('home')
 
     else:
